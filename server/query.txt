@@ -1,0 +1,53 @@
+ await db.run(`
+  CREATE TABLE IF NOT EXISTS services (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    name TEXT NOT NULL,
+    description TEXT NOT NULL
+  )
+`);
+
+// Define appointments table model
+await db.run(`
+  CREATE TABLE IF NOT EXISTS appointments (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    time TEXT NOT NULL,
+    status TEXT NOT NULL
+  )
+`);
+
+// Define contacts table model
+await db.run(`
+  CREATE TABLE IF NOT EXISTS contacts (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    name TEXT NOT NULL,
+    email TEXT NOT NULL
+  )
+`);
+//   await db.run(`
+  CREATE TABLE IF NOT EXISTS users (
+    id INTEGER PRIMARY KEY,
+    username TEXT NOT NULL,
+    password TEXT NOT NULL
+  )
+`);
+
+await db.run(`
+  CREATE TABLE IF NOT EXISTS userdetails (
+    id INTEGER PRIMARY KEY,
+    name TEXT NOT NULL,
+    joiningdate DATE NOT NULL,
+    location TEXT NOT NULL,
+    role TEXT NOT NULL
+  )
+`);
+
+await db.run(`
+  CREATE TABLE IF NOT EXISTS updatedetails (
+    id INTEGER PRIMARY KEY,
+    name TEXT NOT NULL,
+    surname TEXT NOT NULL,
+    place_of_birth TEXT NOT NULL,
+    full_adress TEXT NOT NULL,
+    zipcode INTEGER
+  )
+`);
