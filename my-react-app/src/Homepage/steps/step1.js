@@ -6,14 +6,15 @@ import StepContent from "@mui/material/StepContent";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import React, { useEffect, useState } from "react";
-import "./index.css";
+// import "./index.css";
 import { useCallback } from "react";
 import { useDropzone } from "react-dropzone";
 import Cookies from "js-cookie";
+import Leaves from "./step6";
 
 export const Step1 = (props) => {
   const { currentstep, setsteps, heading } = props;
-  const [updateddetails,setdetails]=useState({id:2, name:'', surname:'', placeOfBirth:'', fullAddress:'', zipcode:50455 })
+  const [updateddetails,setdetails]=useState({id:2, name:'', surname:'', placeOfBirth:'', fullAddress:'', zipcode:null })
 
   const handleNext = async() => {
 const url='http://localhost:3001/createprofile'
@@ -25,7 +26,8 @@ const options = {
   body: JSON.stringify(updateddetails),
 };
 const response = await fetch(url, options);
-console.log(response.json())
+const data=await response.json()
+console.log(data)
     currentstep();
     setsteps();
   };
@@ -34,6 +36,7 @@ console.log(response.json())
     currentstep();
   };
 
+  
   const onDrop = useCallback((acceptedFiles) => {
     // Do something with the files
     console.log(acceptedFiles);
@@ -45,8 +48,339 @@ console.log(response.json())
     setdetails(prev=>({...prev, id : parseInt(userid)}))
   },[])
 
+  const [acceptedFile, setAcceptedFile] = useState({
+
+        idPhoto: null,
+    
+        bankAccount: null,
+    
+        insuranceForm: null,
+    
+        idProof: null,
+    
+        });
+    
+    // const [i,setIdPicture]=useState(null);
+    
+    
+    
+    
+    const handleDrop = useCallback((file, title) => {
+    
+      setAcceptedFile((prevSelectedFiles) => ({
+    
+      ...prevSelectedFiles,
+    
+      [title]: {
+    
+      file: file,
+    
+      name: file.name,
+    
+      size: file.size,
+    
+      },
+    
+      }));
+    
+      setdetails({ ...updateddetails, [title]: file });
+    
+      }, [updateddetails]);
+    
+    
+    
+    
+      const idPictureFiles = acceptedFile.idPicture ? (
+    
+    
+    
+    
+        <li key={acceptedFile.idPicture.name}>
+    
+        {acceptedFile.idPicture.name} ({acceptedFile.idPicture.size} bytes)
+    
+        </li>
+    
+       
+    
+        ) : null;
+    
+       
+    
+        const bankAccountFiles = acceptedFile.bankAccount ? (
+    
+       
+    
+          <li key={acceptedFile.bankAccount.name}>
+    
+        {acceptedFile.bankAccount.name} ({acceptedFile.bankAccount.size} bytes)
+    
+       
+    
+        </li>
+    
+        ) : null;
+    
+       
+    
+        const insuranceFormFiles = acceptedFile.insuranceForm ? (
+    
+       
+    
+         <li key={ acceptedFile.insuranceForm.name}>
+    
+        {acceptedFile.insuranceForm.name} ({acceptedFile.insuranceForm.size} bytes)
+    
+       
+    
+        </li>
+    
+        ) : null;
+    
+       
+    
+        const idProofFiles = acceptedFile.idProof ? (
+    
+       
+    
+         <li key={ acceptedFile.idProof.name}>
+    
+        {acceptedFile.idProof.name} ({acceptedFile.idProof.size} bytes)
+    
+        </li>
+    
+        ) : null;
+    
+       
+    
+      const Patel3 = ({ onDrop, title }) => {
+    
+        // const [acceptedFile, setAcceptedFile] = useState(null);
+    
+    
+    
+    
+        const baseStyle = {
+    
+          flex: 1,
+    
+          display: "flex",
+    
+          flexDirection: "column",
+    
+          alignItems: "center",
+    
+          padding: "20px",
+    
+          borderWidth: 2,
+    
+          borderRadius: 2,
+    
+          borderColor: "grey",
+    
+          borderStyle: "dashed",
+    
+          backgroundColor: "#fafafa",
+    
+          color: "#bdbdbd",
+    
+          outline: "none",
+    
+          transition: "border .24s ease-in-out",
+    
+          width: "530px",
+    
+          marginBottom: "20px",
+    
+        };
+    
+    
+    
+    
+        const focusedStyle = {
+    
+          borderColor: "#2196f3",
+    
+        };
+    
+    
+    
+    
+       
+    
+    
+    
+    
+        const acceptStyle = {
+    
+          borderColor: "#00e676",
+    
+        };
+    
+    
+    
+    
+        const rejectStyle = {
+    
+          borderColor: "#FF1744",
+    
+        };
+    
+        // const handleDrop = (files) => {
+    
+        //   setAcceptedFile(files[0]);
+    
+    
+    
+    
+        //   const updatedFormData = new FormData();
+    
+        //   updatedFormData.append("file", files[0]);
+    
+        //   setFormData({ ...formData, [title]: files[0] });
+    
+        // };
+    
+    
+    
+    
+        const {
+    
+          getRootProps,
+    
+          getInputProps,
+    
+          isFocused,
+    
+          isDragAccept,
+    
+          isDragReject,
+    
+          acceptedFiles,
+    
+        } = useDropzone({
+    
+          accept: { "image/*": [] },
+    
+          onDrop: (files) => {
+    
+            setAcceptedFile(files[0]);
+    
+            onDrop(files[0], title);
+    
+          },
+    
+        });
+    
+    
+    
+    
+        // function StyledDropzone3({ props }) {
+    
+        // const handleDrop = useCallback( (file, title) => {
+    
+        //   // (file) => {
+    
+        //       setAcceptedFile(files[0]);
+    
+        //       onDrop(files[0], title);
+    
+        //     // }
+    
+        //   // setFormData({ ...formData, [title]: file });
+    
+        // },
+    
+        // []
+    
+        // );
+    
+    
+    
+    
+        const style = {
+    
+          ...baseStyle,
+    
+          ...(isFocused ? focusedStyle : {}),
+    
+          ...(isDragAccept ? acceptStyle : {}),
+    
+          ...(isDragReject ? rejectStyle : {}),
+    
+        };
+    
+    
+    
+    
+        // const files = acceptedFile
+    
+        //   ? [
+    
+        //       <li key={acceptedFile.path}>
+    
+        //         {acceptedFile.path} {acceptedFile.size} bytes
+    
+        //       </li>,
+    
+        //     ]
+    
+        //   : null;
+    
+        // console.log(acceptedFile, "accepted");
+    
+    
+    
+    
+        return (
+    
+          <div className="container">
+    
+            <div {...getRootProps({ style })}>
+    
+              <input
+    
+                {...getInputProps()}
+    
+                // onChangeCapture: (e) => setAcceptedFile(e.target.files[0]),
+    
+              />
+    
+              <div className="share">
+    
+                {""}
+    
+                <p>
+    
+                  
+    
+                </p>
+    
+                <p> "Drag file or click to upload"</p>
+    
+              </div>
+    
+            </div>
+    
+            {/* {files && (
+    
+              <aside>
+    
+                <ul>{files}</ul>
+    
+              </aside>
+    
+            )} */}
+    
+          </div>
+    
+        );
+    
+      };
+
   return (
     <>
+    
     {console.log(updateddetails)}
       <h1 className="text-blue-700 text-2xl font-bold">Task Details</h1>
 
@@ -160,86 +494,40 @@ console.log(response.json())
                               />{" "}
                             </div>
                           </div>
-                          <div>
-                            <p className="font-bold text-lg">1.2 Visual data</p>
-                            <p>
-                              Upload your ID picture it will be used as a
-                              profile picture in internal communication
-                            </p>
-                            <div
-                              className="h-20 border-2  flex
-    items-center  justify-center border-dashed border-gray-700 bg-slate-100 m-5 rounded-lg "
-                              {...getRootProps()}
-                            >
-                              <input {...getInputProps()} />
-                              {isDragActive ? (
-                                <p>Drop the files here ...</p>
-                              ) : (
-                                <p>
-                                  Drag 'n' drop some files here, or click to
-                                  select files
-                                </p>
-                              )}
-                            </div>
-                          </div>
-                          <div>
-                          <p className="font-bold text-lg">1.3 Scan and upload documents</p>
-                            <p>
-                              Upload bank account
-                            </p>
-                            <div
-                              className="h-20 border-2  flex
-    items-center  justify-center border-dashed border-gray-700 bg-slate-100 m-5 rounded-lg "
-                              {...getRootProps()}
-                            >
-                              <input {...getInputProps()} />
-                              {isDragActive ? (
-                                <p>Drop the files here ...</p>
-                              ) : (
-                                <p>
-                                  Drag 'n' drop some files here, or click to
-                                  select files
-                                </p>
-                              )}
-                            </div>
-                          </div>
-                            <p>
-                              Upload insurance form
-                            </p>
-                            <div
-                              className="h-20 border-2  flex
-    items-center  justify-center border-dashed border-gray-700 bg-slate-100 m-5 rounded-lg "
-                              {...getRootProps()}
-                            >
-                              <input {...getInputProps()} />
-                              {isDragActive ? (
-                                <p>Drop the files here ...</p>
-                              ) : (
-                                <p>
-                                  Drag 'n' drop some files here, or click to
-                                  select files
-                                </p>
-                              )}
-                            </div>
-                          
-                            <p>
-                              Upload scan copy of ID proof
-                            </p>
-                            <div
-                              className="h-20 border-2  flex
-    items-center  justify-center border-dashed border-gray-700 bg-slate-100 m-5 rounded-lg "
-                              {...getRootProps()}
-                            >
-                              <input {...getInputProps()} />
-                              {isDragActive ? (
-                                <p>Drop the files here ...</p>
-                              ) : (
-                                <p>
-                                  Drag 'n' drop some files here, or click to
-                                  select files
-                                </p>
-                              )}
-                            </div>
+                          <p className="id">
+
+        Upload your ID picture will be used as a profile picture in internal
+
+        communication
+
+      </p>
+
+      <Patel3 name="image1" title="idPicture" onDrop={handleDrop} />
+
+      <ul>{idPictureFiles}</ul>
+
+      <h4>1.3 Scan and upload docments</h4>
+
+      <h4>Upload bank account</h4>
+
+
+
+
+      <Patel3 name="image2" title="bankAccount" onDrop={handleDrop} />
+
+      <ul>{bankAccountFiles}</ul>
+
+      <h4>Upload insurance form</h4>
+
+      <Patel3 name="image3" title="insuranceForm" onDrop={handleDrop} />
+
+      <ul>{insuranceFormFiles}</ul>
+
+      <h4>Upload scan copy of ID proof</h4>
+
+      <Patel3 name="image4" title="idProof" onDrop={handleDrop} />
+
+      <ul>{idProofFiles}</ul>
                           
                         </form>
 
@@ -498,7 +786,8 @@ export const Step6 = (props) => {
 
   return (
     <>
-      <div className=" my-8 p-5 w-5/6  border-2 border-neutral-800">
+    <Leaves handleNext={handleNext} />
+      {/* <div className=" my-8 p-5 w-5/6  border-2 border-neutral-800">
         <p onClick={backtohome}> {"<"} Back to Roadmap </p>
 
         <Box sx={{ maxWidth: 900 }} className="mt-4 p-4 py-8  bg-slate-200">
@@ -532,7 +821,7 @@ export const Step6 = (props) => {
             </Step>
           </Stepper>
         </Box>
-      </div>
+      </div> */}
     </>
   );
 };

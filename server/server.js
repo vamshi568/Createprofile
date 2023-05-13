@@ -95,4 +95,9 @@ app.get('/getdata',async (req,res)=>{
 
 
 
-
+app.post('/applyLeave',async (req, res) => {
+  const { endDate,startDate,key } = req.body;
+  
+  // const dbres=await db.run(`INSERT INTO updatedetail (id, name, surname, placeofbirth, fulladress, zipcode) VALUES (${id}, ${name}, ${surname}, ${placeOfBirth}, ${fullAddress}, ${zipcode})`)
+      res.send({"text":"updated"})
+  });
